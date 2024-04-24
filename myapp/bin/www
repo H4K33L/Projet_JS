@@ -37,6 +37,19 @@ var io = new Server(server);
 
 io.on("connection", (socket) => {
   console.info(`Client connected [id=${socket.id}]`);
+  socket.on('room', (roomID) => {
+    socket.join(roomID);
+    console.info('Client connected on room : '+roomID);
+    let test = io.sockets.adapter.rooms[roomID] || {};
+    let players = [];
+    test.forEach(player => {
+      io.sockets.socket(player).emit('requestName');
+      socket.on('Name', (Name) => {
+        players.push(Name);
+      })
+    });
+    socket.on(roomID).emit('playerList',players);
+  })
 })
 
 /**

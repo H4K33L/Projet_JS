@@ -1,1 +1,9 @@
-script(type = 'module' src='/javascripts/info.js')
+doctype html
+html
+  head
+    title= 'Comme tu veux'
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    a(id = "go" class= 'game') Go !
+
+script(type = 'module' src='/javascripts/game.js')
