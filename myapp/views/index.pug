@@ -1,6 +1,15 @@
-extends layout
+doctype html
+html
+  head
+    title= 'Comme tu veux'
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    form(name = "form1" method = 'get')
+      label(for="Name") Name :
+      input(type="text" placeholder='Name' name='Name')
+    form(name = "form2" method = 'get')
+      label(for="RoomId") Room ID :
+      input(type="text" placeholder='Room ID' name='roomID')
+    a(id = "go" class= 'game') Go !
 
-block content
-  h1= title
-  p Welcome to #{title}
-  script(type = 'module' src='/javascripts/index.js')
+    script(type = 'module' src='/javascripts/index.js')
