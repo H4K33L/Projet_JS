@@ -18,7 +18,6 @@ class Room {
         games[id][socket.id] = {
             score: 0,
             name: player.name,
-            avatar: player.avatar,
         };
         console.log(games);
         socket.player = player;
