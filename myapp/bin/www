@@ -40,15 +40,12 @@ io.on("connection", (socket) => {
   socket.on('room', (roomID) => {
     socket.join(roomID);
     console.info('Client connected on room : '+roomID);
-    let test = io.sockets.adapter.rooms[roomID] || {};
     let players = [];
-    test.forEach(player => {
-      io.sockets.socket(player).emit('requestName');
-      socket.on('Name', (Name) => {
-        players.push(Name);
-      })
-    });
-    socket.on(roomID).emit('playerList',players);
+    io.in(roomID).emit('requestName',"");
+    socket.on('Name', (Name) => {
+      players.push(Name);
+    })
+    io.in(roomID).emit('playerList',players);
   })
 })
 
