@@ -19,6 +19,7 @@ socket.on('requestName', () => {
 
 socket.on('playerList', (playerList) => {
   // affichage joueurs
+  updatePlayer(playerList);
 })
 
 document.getElementById("go").onclick = () => {
@@ -26,5 +27,15 @@ document.getElementById("go").onclick = () => {
 };
 
 socket.on('StartGame', (playerName) => {
-  // aficher le canva
+  // afficher le canva
 })
+
+const updatePlayer = (playerList)=>{
+  let playerListElement = document.getElementById('playerList')
+  playerListElement.innerHTML = ''
+  playerList.forEach(playerName => {
+    let playerItem = document.createElement('li')
+    playerItem.textContent=playerName
+    playerListElement.appendChild(playerItem)
+  });
+}
