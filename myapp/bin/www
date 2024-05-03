@@ -42,16 +42,33 @@ io.on("connection", (socket) => {
     socket.join(roomID);
     if(!players.hasOwnProperty(roomID)) {
       players[roomID]=[];
-      console.log("test")
     }
     console.info('Client connected on room : '+roomID);
-    io.in(roomID).emit('requestName',"");
+    
     socket.on('Name', (Name) => {
       if (!players[roomID].includes(Name)) {
         players[roomID].push(Name);
       }
+      io.in(roomID).emit('playerList',players[roomID]);
     })
-    io.in(roomID).emit('playerList',players[roomID]);
+    
+    socket.on('disconnect', () => {
+      console.log(`Client disconnected [id=${socket.id}]`);
+      players[roomID]=[];
+      io.in(roomID).emit('requestName',"");
+      socket.on('Name', (Name) => {
+        if (!players[roomID].includes(Name)) {
+          players[roomID].push(Name);
+        }
+      })
+      let temp = {};
+      for (const [key, value] of Object.entries(players)) {
+        if (!value.length === 0) {
+          temp[key]=value;
+        }
+      }
+      players = temp;
+    });
   })
 })
 

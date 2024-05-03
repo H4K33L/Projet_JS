@@ -13,6 +13,7 @@ let Name = document.cookie
 .find((row) => row.startsWith("Name="))
 ?.split("=")[1];
 
+socket.emit("Name", Name);
 socket.on('requestName', () => {
   socket.emit("Name", Name);
 })
