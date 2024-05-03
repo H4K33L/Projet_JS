@@ -34,9 +34,9 @@ socket.on('StartGame', (playerName) => {
 const updatePlayer = (playerList)=>{
   let playerListElement = document.getElementById('playerList')
   playerListElement.innerHTML = ''
-  playerList.forEach(playerName => {
+  Object.keys(playerList).forEach(playerName => {
     let playerItem = document.createElement('li')
-    playerItem.textContent=playerName
+    playerItem.textContent=playerList[playerName]
     playerListElement.appendChild(playerItem)
   });
 }
