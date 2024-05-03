@@ -4,7 +4,26 @@ html
     title= 'Comme tu veux'
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    a(id = "go" class= 'game') Go !
+    a(id = "go" class= 'game')  Go !
     ul(id = "playerList")
+    canvas(id = "MyCanvas" width= "500" height= "500")
 
-script(type = 'module' src='/javascripts/game.js')
+    button(id="white") white
+    button(id="black") black
+    button(id="lightgrey") light grey 
+    button(id="grey") grey 
+    button(id="red") red
+    button(id="darkred") dark red
+    button(id="orange") orange
+    button(id="yellow") yellow
+    button(id="green") green
+    button(id="darkgreen") dark green
+    button(id="lightblue") light blue
+    button(id="cyan") cyan
+    button(id="blue") blue
+    button(id="darkblue") dark blue
+    button(id="purple") purple
+    button(id="pink") pink
+    button(id="brown") brown
+    
+    script(type = 'module' src='/javascripts/game.js')

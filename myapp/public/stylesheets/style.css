@@ -97,3 +97,7 @@
     line-height: 88px;
   }
 }
+
+#MyCanvas{
+  border: 2px solid;
+}

@@ -35,6 +35,7 @@ server.on('listening', onListening);
  */
 var io = new Server(server);
 let players = {};
+let allData ={};
 
 io.on("connection", (socket) => {
   console.info(`Client connected [id=${socket.id}]`);
@@ -52,7 +53,22 @@ io.on("connection", (socket) => {
       }
     })
     io.in(roomID).emit('playerList',players[roomID]);
+    socket.on('StartGame',()=>{
+      console.log("The game has started")
+      socket.emit('game')
+      socket.in(roomID).emit('game')
+    })
+    socket.on('startDrawing',(data)=>{
+      if(!allData.hasOwnProperty(roomID)){
+        allData[roomID]=[]
+      }
+      if(data['isDrawing']){
+        allData[roomID].push({x:data['x'],y:data['y'], color:data['color']})
+        socket.in(roomID).emit('draw',allData[roomID]);
+      }
+    })
   })
+  
 })
 
 /**
