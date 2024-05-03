@@ -42,34 +42,46 @@ io.on("connection", (socket) => {
   socket.on('room', (roomID) => {
     socket.join(roomID);
     if(!players.hasOwnProperty(roomID)) {
-      players[roomID]=[];
-      console.log("test")
+      players[roomID]={};
     }
     console.info('Client connected on room : '+roomID);
-    io.in(roomID).emit('requestName',"");
+    
     socket.on('Name', (Name) => {
-      if (!players[roomID].includes(Name)) {
-        players[roomID].push(Name);
+      if (!Object.values(players[roomID]).includes(Name)) {
+        players[roomID][socket.id]= Name ;
       }
+      io.in(roomID).emit('playerList',players[roomID]);
     })
-    io.in(roomID).emit('playerList',players[roomID]);
-    socket.on('StartGame',()=>{
-      console.log("The game has started")
-      socket.emit('game')
-      socket.in(roomID).emit('game')
-    })
-    socket.on('startDrawing',(data)=>{
-      if(!allData.hasOwnProperty(roomID)){
-        allData[roomID]=[]
-      }
-      if(data['isDrawing']){
-        allData[roomID].push({x:data['x'],y:data['y'], color:data['color']})
-        socket.in(roomID).emit('draw',allData[roomID]);
-      }
+    
+    socket.on('disconnect', () => {
+      console.log(`Client disconnected [id=${socket.id}]`);
+      let temp = {};
+      Object.keys(players[roomID]).forEach(id => {
+        if (id === socket.id != true) {
+          temp[id] = players[roomID][id]
+        }
+      })
+      players[roomID] = temp;
+      io.in(roomID).emit('playerList',players[roomID]);
+      temp = {};
+      Object.keys(players).forEach(roomid => {
+        if (Object.keys(players[roomid]).length === 0 != true) {
+          temp[roomid]=players[roomid]
+        }
+      })
+      players = temp;
+    });
+      socket.on('startDrawing',(data)=>{
+        if(!allData.hasOwnProperty(roomID)){
+          allData[roomID]=[]
+        }
+        if(data['isDrawing']){
+          allData[roomID].push({x:data['x'],y:data['y'], color:data['color']})
+          socket.in(roomID).emit('draw',allData[roomID]);
+        }
+      })
     })
   })
-  
-})
 
 /**
  * Normalize a port into a number, string, or false.

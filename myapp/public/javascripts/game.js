@@ -13,6 +13,7 @@ let Name = document.cookie
 .find((row) => row.startsWith("Name="))
 ?.split("=")[1];
 
+socket.emit("Name", Name);
 socket.on('requestName', () => {
   socket.emit("Name", Name);
 })
@@ -29,9 +30,9 @@ document.getElementById("go").onclick = () => {
 const updatePlayer = (playerList)=>{
   let playerListElement = document.getElementById('playerList')
   playerListElement.innerHTML = ''
-  playerList.forEach(playerName => {
+  Object.keys(playerList).forEach(playerName => {
     let playerItem = document.createElement('li')
-    playerItem.textContent=playerName
+    playerItem.textContent=playerList[playerName]
     playerListElement.appendChild(playerItem)
   });
 }
