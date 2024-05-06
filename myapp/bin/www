@@ -71,17 +71,30 @@ io.on("connection", (socket) => {
       })
       players = temp;
     });
-      socket.on('startDrawing',(data)=>{
-        if(!allData.hasOwnProperty(roomID)){
-          allData[roomID]=[]
-        }
-        if(data['isDrawing']){
-          allData[roomID].push({x:data['x'],y:data['y'], color:data['color']})
-          socket.in(roomID).emit('draw',allData[roomID]);
-        }
-      })
+    socket.on('StartGame',()=>{
+      console.log("The game has started")
+      socket.emit('game')
+      socket.in(roomID).emit('game')
+    })
+    socket.on('startDrawing',(data)=>{
+      let {x,y,draw}=data
+      if(!allData.hasOwnProperty(roomID)){
+        allData[roomID]=[]
+      }
+      if(draw){
+        allData[roomID].push({x:x,y:y})
+        socket.in(roomID).emit('draw',allData[roomID]);
+      }
+    })
+    socket.on('clear', ()=>{
+      allData[roomID].splice(0, allData[roomID].length);
+      socket.in(roomID).emit('clearAll')
+    })
+    socket.on('changeColor',(color)=>{
+      socket.in(roomID).emit('newColor',color)
     })
   })
+})
 
 /**
  * Normalize a port into a number, string, or false.

@@ -59,13 +59,23 @@ socket.on('game', () => {
   const pink = document.getElementById('pink');
   const brown = document.getElementById('brown');
 
+  const clear = document.getElementById('clear');
+
   const context = canvas.getContext('2d');
   let isDrawing = false;
   let color = 'black';
 
-  const draw = (x, y, isDrawing,colorline) => {
+  const changeColor=(newColor)=>{
+    socket.emit('changeColor',newColor)
+  }
+  const clearCanvas=() =>{
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  const draw = (x, y, isDrawing) => {
     if (!isDrawing) return;
-    context.fillStyle = colorline;
+    context.fillStyle = color;
     context.beginPath();
     context.arc(x, y, 1, 0, 2 * Math.PI, true);
     context.fill(); 
@@ -74,12 +84,12 @@ socket.on('game', () => {
   canvas.addEventListener('mousedown', (event) => {
     isDrawing = true;
     draw(event.offsetX, event.offsetY, isDrawing);
-    socket.emit('startDrawing', { x: event.offsetX, y: event.offsetY, color, isDrawing ,color});
+    socket.emit('startDrawing', { x: event.offsetX, y: event.offsetY, draw:isDrawing});
   });
 
   canvas.addEventListener('mousemove', (event) => {
     draw(event.offsetX, event.offsetY, isDrawing);
-    socket.emit('startDrawing', { x: event.offsetX, y: event.offsetY,color, isDrawing,color });
+    socket.emit('startDrawing', { x: event.offsetX, y: event.offsetY,color, draw:isDrawing});
   });
 
   canvas.addEventListener('mouseup', () => {
@@ -91,65 +101,89 @@ socket.on('game', () => {
   });
 
   socket.on('draw', (allData) => {
-    allData.forEach(data => {
-      const { x, y, colorline } = data;
-      if(colorline) {
-        currentColor = colorline;
-      }
-      
-      draw(x, y, true,colorline);
-    });
+      const { x, y} = allData[allData.length-1];
+      draw(x, y, true);
   });
 
+  socket.on('clearAll',()=>{
+    clearCanvas()
+  })
+
+  socket.on('newColor',(newColor)=>{
+    console.log(newColor)
+    color=newColor
+  })
+
+  clear.addEventListener('click', ()=>{
+    socket.emit('clear')
+    clearCanvas()
+  })
   white.addEventListener('click',()=>{
     color = 'white'
+    changeColor(color)
   })
   black.addEventListener('click',()=>{
     color = 'black'
+    changeColor(color)
   })
   lightgrey.addEventListener('click',()=>{
     color = 'lightgrey'
+    changeColor(color)
   })
   grey.addEventListener('click',()=>{
     color = 'grey'
+    changeColor(color)
   })
   red.addEventListener('click',()=>{
     color = 'red'
+    changeColor(color)
   })
   darkred.addEventListener('click',()=>{
     color = 'darkred'
+    changeColor(color)
   })
   orange.addEventListener('click',()=>{
     color = 'orange'
+    changeColor(color)
   })
   yellow.addEventListener('click',()=>{
     color = 'yellow'
+    changeColor(color)
   })
   green.addEventListener('click',()=>{
     color = 'green'
+    changeColor(color)
   })
   darkgreen.addEventListener('click',()=>{
     color = 'darkgreen'
+    changeColor(color)
   })
   lightblue.addEventListener('click',()=>{
     color = 'lightblue'
+    changeColor(color)
   })
   cyan.addEventListener('click',()=>{
     color = 'cyan'
+    changeColor(color)
   })
   blue.addEventListener('click',()=>{
     color = 'blue'
+    changeColor(color)
   })
   darkblue.addEventListener('click',()=>{
     color = 'darkblue'
+    changeColor(color)
   })
   purple.addEventListener('click',()=>{
     color = 'purple'
+    changeColor(color)
   })
   pink.addEventListener('click',()=>{
     color = 'pink'
+    changeColor(color)
   })
   brown.addEventListener('click',()=>{
     color = 'brown'
+    changeColor(color)
   })
 });
