@@ -1,21 +1,21 @@
-Welcome to the Skrybe io project.
+Welcome to the Skrybe.io project.
 
-#--- The project ---#
-The project is build on an exepress app, if you dont know how an express app work :
- - bin/www : is the server side.
- - app.js : this is the script who redirect webpage link folowing the router rules.
- - routes/ : this is the place where all router function are place.
- - views/ : this is the place where you place .pug documents. We used pug to make web pages.
- - public/
-   - images/ : this is the place where you place iamges used in the website.
-   - javascript/ : this is the place where you place javascript code used in the website, the client side is place here.
-   - stylesheets/ : this is the place where you place CSS script used in the website.
+## The Project
+This project is built on an Express app. If you're unfamiliar with how an Express app works:
+- **bin/www**: This file represents the server side.
+- **app.js**: This script manages webpage redirection based on router rules.
+- **routes/**: This directory contains all the router functions.
+- **views/**: Here, you'll find the `.pug` documents which are used to create web pages.
+- **public/**
+  - **images/**: Store images used on the website.
+  - **javascript/**: Contains client-side JavaScript code.
+  - **stylesheets/**: Houses CSS scripts used in the website.
 
-There is two page in the site, the conection page where the user chose his username and the room to join.
-If the romm dosent exist the room are create.
-And the second page is the game page. Once all the player are on the game page one of them can clic on the GO button to launch the game.
+The site has two main pages:
+1. **Connection Page**: Users choose their username and the room to join. If the room doesn't exist, it is created.
+2. **Game Page**: Once all players are on this page, one of them can click the "GO" button to start the game.
 
-#--- Games rules ---#
-The rules of the game is like the Skribbl io game, but if you did'nt know it :
-One of the player recive a word and he need to draw to help the other user gues the word.
-User get point depending on her position, all the point if he gues the word first ect ect.
+## Game Rules
+The game follows rules similar to Skribbl.io:
+- One player receives a word and must draw it to help other users guess the word.
+- Users earn points based on their performance and position; for example, guessing the word first earns maximum points.
