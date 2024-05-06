@@ -36,6 +36,7 @@ server.on('listening', onListening);
 var io = new Server(server);
 let players = {};
 let allData ={};
+let allMessage ={};
 
 io.on("connection", (socket) => {
   console.info(`Client connected [id=${socket.id}]`);
@@ -93,6 +94,19 @@ io.on("connection", (socket) => {
     socket.on('changeColor',(color)=>{
       socket.in(roomID).emit('newColor',color)
     })
+    socket.on('changeSize',(size)=>{
+      socket.in(roomID).emit('newSize',size)
+    })
+    socket.on('sendMessage', (newMessage) => {
+      let {name,send}=newMessage
+      if(!allMessage.hasOwnProperty(roomID)){
+        allMessage[roomID]=[]
+      }
+      allMessage[roomID].push({name:name,message:send})
+      socket.emit('newMessage', allMessage[roomID])
+      socket.in(roomID).emit('newMessage', allMessage[roomID]);
+    });
+    
   })
 })
 

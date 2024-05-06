@@ -6,7 +6,7 @@ html
   body
     a(id = "go" class= 'game')  Go !
     ul(id = "playerList")
-    canvas(id = "MyCanvas" width= "500" height= "500")
+    canvas(id = "MyCanvas" width= "1000" height= "500")
 
     button(id="white") white
     button(id="black") black
@@ -26,6 +26,15 @@ html
     button(id="pink") pink
     button(id="brown") brown
 
+    button(id="Xsmall") X-small size 
+    button(id="small") small size 
+    button(id="medium") medium size 
+    button(id="large") large size 
+    button(id="Xlarge") X-large size 
+
     button(id="clear") clear 
+
+    input(type="text" id="chat-input")
+    ul(id="chat-message")
     
     script(type = 'module' src='/javascripts/game.js')
