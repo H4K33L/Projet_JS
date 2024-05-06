@@ -40,6 +40,18 @@ let allMessage ={};
 
 io.on("connection", (socket) => {
   console.info(`Client connected [id=${socket.id}]`);
+  socket.on('check name', data => {
+    if(players.hasOwnProperty(data[1])) {
+      if (!Object.values(players[data[1]]).includes(data[0])) {
+        io.emit("goodName",true)
+      } else {
+        io.emit("goodName",false)
+      }
+    } else {
+      io.emit("goodName",true)
+    }
+  })
+
   socket.on('room', (roomID) => {
     socket.join(roomID);
     if(!players.hasOwnProperty(roomID)) {
@@ -48,9 +60,7 @@ io.on("connection", (socket) => {
     console.info('Client connected on room : '+roomID);
     
     socket.on('Name', (Name) => {
-      if (!Object.values(players[roomID]).includes(Name)) {
-        players[roomID][socket.id]= Name ;
-      }
+      players[roomID][socket.id]= Name ;
       io.in(roomID).emit('playerList',players[roomID]);
     })
     
@@ -72,11 +82,13 @@ io.on("connection", (socket) => {
       })
       players = temp;
     });
+
     socket.on('StartGame',()=>{
       console.log("The game has started")
       socket.emit('game')
       socket.in(roomID).emit('game')
     })
+
     socket.on('startDrawing',(data)=>{
       let {x,y,draw}=data
       if(!allData.hasOwnProperty(roomID)){
@@ -87,10 +99,12 @@ io.on("connection", (socket) => {
         socket.in(roomID).emit('draw',allData[roomID]);
       }
     })
+
     socket.on('clear', ()=>{
       allData[roomID].splice(0, allData[roomID].length);
       socket.in(roomID).emit('clearAll')
     })
+
     socket.on('changeColor',(color)=>{
       socket.in(roomID).emit('newColor',color)
     })
