@@ -23,6 +23,20 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+
+const word =(callback)=>{
+  fs.readFile("words.json",(err,data)=>{
+    if(err){throw err}
+
+    let list =JSON.parse(data).words;
+    let wordToFind = []
+
+    for(let i=0;i<3;i++){wordToFind.push(list[Math.floor(Math.random() * list.length)])}
+    callback(wordToFind);
+  })
+}
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -37,6 +51,7 @@ var io = new Server(server);
 let players = {};
 let allData ={};
 let allMessage ={};
+let playerturn ={};
 
 io.on("connection", (socket) => {
   console.info(`Client connected [id=${socket.id}]`);
@@ -95,7 +110,17 @@ io.on("connection", (socket) => {
       socket.emit('game')
       socket.in(roomID).emit('game')
     })
-
+    socket.on('requestWord',()=>{
+       word((wordsList) => {
+        if (!playerturn.hasOwnProperty(roomID)) {
+          playerturn[roomID] = [];
+          for (let player in players[roomID]) {
+            playerturn[roomID].push(player);
+          }
+        }
+        socket.to(playerturn[roomID][0]).emit('words', wordsList);
+      })
+    })
     socket.on('startDrawing',(data)=>{
       let {x,y,draw}=data
       if(!allData.hasOwnProperty(roomID)){
@@ -127,7 +152,13 @@ io.on("connection", (socket) => {
       socket.emit('newMessage', allMessage[roomID])
       socket.in(roomID).emit('newMessage', allMessage[roomID]);
     });
-    
+    socket.on('wordToFind',(word)=>{
+      socket.in(roomID).emit('word',word)
+    })
+    socket.on('next',()=>{
+      playerturn[roomID].push(playerturn[roomID].shift());
+      socket.to(playerturn[roomID][0]).emit('words',wordsList)
+    })
   })
 })
 
