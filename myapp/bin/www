@@ -60,8 +60,15 @@ io.on("connection", (socket) => {
     console.info('Client connected on room : '+roomID);
     
     socket.on('Name', (Name) => {
-      players[roomID][socket.id]= Name ;
+      players[roomID][socket.id]= [Name,0] ;
       io.in(roomID).emit('playerList',players[roomID]);
+    })
+
+    socket.on("banVote", userID => {
+      players[roomID][userID][1]++
+      if (players[roomID][userID][1] >= Object.keys(players[roomID]).length - 1) {
+        io.to(userID).emit("deco")
+      }
     })
     
     socket.on('disconnect', () => {

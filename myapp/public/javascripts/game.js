@@ -18,6 +18,11 @@
     socket.emit("Name");
   })
 
+  socket.on("deco", ()=> {
+    document.location.href="/";
+    alert("You ave been baned !")
+  })
+
   socket.on('playerList', (playerList) => {
     // affichage joueurs
     updatePlayer(playerList);
@@ -25,14 +30,21 @@
 
   document.getElementById("go").addEventListener('click', () => {
     socket.emit('StartGame');
-});
+  });
 
   const updatePlayer = (playerList)=>{
     let playerListElement = document.getElementById('playerList')
     playerListElement.innerHTML = ''
-    Object.keys(playerList).forEach(playerName => {
+    Object.keys(playerList).forEach(playerID => {
       let playerItem = document.createElement('li')
-      playerItem.textContent=playerList[playerName]
+      let buton = document.createElement('button')//
+      buton.textContent = "Ban"//
+      buton.onclick = () => {
+        socket.emit("banVote",playerID)
+        buton.disabled=true
+      }//
+      playerItem.textContent=playerList[playerID][0]
+      playerItem.appendChild(buton)//
       playerListElement.appendChild(playerItem)
     });
   }
