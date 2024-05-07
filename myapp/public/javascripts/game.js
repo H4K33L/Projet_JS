@@ -25,6 +25,7 @@
 
   document.getElementById("go").addEventListener('click', () => {
     socket.emit('StartGame');
+    socket.emit("requestWord")
 });
 
   const updatePlayer = (playerList)=>{
@@ -39,6 +40,7 @@
 
   const handleDrawingDuringTurn=() => {
     const canvas = document.getElementById('MyCanvas')
+
     const white = document.getElementById('white');
     const black = document.getElementById('black'); 
     const lightgrey = document.getElementById('lightgrey');
@@ -47,6 +49,7 @@
     const darkred = document.getElementById('darkred');
     const orange = document.getElementById('orange');
     const yellow = document.getElementById('yellow');
+    const lightgreen = document.getElementById('lightgreen');
     const green = document.getElementById('green');
     const darkgreen = document.getElementById('darkgreen');
     const lightblue = document.getElementById('lightblue');
@@ -64,6 +67,8 @@
     const Xlarge= document.getElementById('Xlarge')
     
     const clear = document.getElementById('clear')
+    const next = document.getElementById('next')
+
     const context = canvas.getContext('2d');
     let isDrawing = false;
     let color = 'black'
@@ -161,6 +166,10 @@
       color = 'yellow'
       changeColor(color)
     })
+    lightgreen.addEventListener('click',()=>{
+      color = 'lightgreen'
+      changeColor(color)
+    })
     green.addEventListener('click',()=>{
       color = 'green'
       changeColor(color)
@@ -197,23 +206,23 @@
       color = 'brown'
       changeColor(color)
     })
-      socket.on('clearAll',()=>{
-        clearCanvas()
-      })
-
-      socket.on('draw', (allData) => {
-        const {x, y} = allData[allData.length-1];
-        draw(x, y, true);
-      });
-
-      socket.on('newColor',(newColor)=>{
-        color=newColor
-      })
-
-      socket.on('newSize',(newSize)=>{
-        size=newSize
-      })
-    }
+    next.addEventListener('click',()=>{
+      socket.emit('next')
+    })
+    socket.on('clearAll',()=>{
+      clearCanvas()
+    })    
+    socket.on('draw', (allData) => {
+      const {x, y} = allData[allData.length-1];
+      draw(x, y, true);
+    });    socket.on('newColor',(newColor)=>{
+      color=newColor
+    })    
+    socket.on('newSize',(newSize)=>{
+      size=newSize
+    }) 
+  }
+ 
 
   socket.on('game', handleDrawingDuringTurn);
 
@@ -249,6 +258,15 @@ const updateMessage = (allMessage)=>{
     messageListElement.appendChild(messageItem)
   });
 }
-  
 
-  
+const hidden =(word)=>{
+  let hiddenWord =""
+  for (let i=0;i<word.length;i++){
+    if (word.split[""][i] !== "-") {
+      hiddenWord += "_";
+    } else {
+      hiddenWord += "-";
+    }
+  }
+  return hiddenWord
+}
