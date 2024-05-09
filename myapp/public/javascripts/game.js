@@ -55,8 +55,8 @@
 
     const white = document.getElementById('white');
     const black = document.getElementById('black'); 
-    const lightgrey = document.getElementById('lightgrey');
-    const grey = document.getElementById('grey');
+    const lightgrey = document.getElementById('lightgray');
+    const grey = document.getElementById('gray');
     const red = document.getElementById('red');
     const darkred = document.getElementById('darkred');
     const orange = document.getElementById('orange');
@@ -155,11 +155,11 @@
       changeColor(color)
     })
     lightgrey.addEventListener('click',()=>{
-      color = 'lightgrey'
+      color = 'lightgray'
       changeColor(color)
     })
     grey.addEventListener('click',()=>{
-      color = 'grey'
+      color = 'gray'
       changeColor(color)
     })
     red.addEventListener('click',()=>{

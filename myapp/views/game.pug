@@ -8,36 +8,38 @@ html
     ul(id = "playerList")
 
     canvas(id = "MyCanvas" width= "1000" height= "500")
-
-    button(id="white") white
-    button(id="black") black
-    button(id="lightgrey") light grey 
-    button(id="grey") grey 
-    button(id="red") red
-    button(id="darkred") dark red
-    button(id="orange") orange
-    button(id="yellow") yellow
-    button(id="lightgreen") light green
-    button(id="green") green
-    button(id="darkgreen") dark green
-    button(id="lightblue") light blue
-    button(id="cyan") cyan
-    button(id="blue") blue
-    button(id="darkblue") dark blue
-    button(id="purple") purple
-    button(id="pink") pink
-    button(id="brown") brown
-
-    button(id="Xsmall") X-small size 
-    button(id="small") small size 
-    button(id="medium") medium size 
-    button(id="large") large size 
-    button(id="Xlarge") X-large size 
-
-    button(id="clear") clear 
-    button(id="next") Next 
-
-    input(type="text" id="chat-input")
-    ul(id="chat-message")
+    br
+    section(id="info")
+      section(id="color")
+        button(id="white")
+        button(id="black")
+        button(id="lightgray")
+        button(id="gray")
+        button(id="red")
+        button(id="darkred")
+        button(id="orange")
+        button(id="yellow")
+        button(id="lightgreen")
+        button(id="green")
+        button(id="darkgreen")
+        button(id="lightblue")
+        button(id="cyan")
+        button(id="blue")
+        button(id="darkblue")
+        button(id="purple")
+        button(id="pink")
+        button(id="brown")
+      section(id="size")
+        button(id="Xsmall")
+        button(id="small")
+        button(id="medium")
+        button(id="large")
+        button(id="Xlarge")
+      section(id="plus")
+        button(id="clear") Clear 
+        button(id="next") Next 
+        ul(id="chat-message")
+        input(type="text" id="chat-input")
+    
     
     script(type = 'module' src='/javascripts/game.js')

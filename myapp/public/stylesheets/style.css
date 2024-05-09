@@ -105,3 +105,137 @@ body {
 #MyCanvas{
   border: 2px solid;
 }
+
+button{
+  height: 20px;
+  width: 45px;
+  margin-left: 10px;
+}
+
+#color button, #size button{
+  border: none;
+  margin-left: 5px;
+}
+
+#plus button{
+  border: none;
+}
+#color button{
+  margin-left: 0;
+}
+
+#color button:hover, #size button:hover{
+  opacity: 0.5;
+}
+#white{
+  background-color: white;
+  border: 2px solid;
+  width: 20px;
+}
+#black{
+  background-color: black;
+  width: 20px;
+}
+#lightgray{
+  background-color: lightgrey;
+  width: 20px;
+}
+#gray{
+  background-color: gray;
+  width: 20px;
+}
+#red{
+  background-color: red;
+  width: 20px;
+}
+#darkred{
+  background-color: darkred;
+  width: 20px;
+}
+#orange{
+  background-color: orange;
+  width: 20px;
+}
+#yellow{
+  background-color: yellow;
+  width: 20px;
+}
+#lightgreen{
+  background-color: lightgreen;
+  width: 20px;
+}
+#green{
+  background-color: green;
+  width: 20px;
+}
+#darkgreen{
+  background-color: darkgreen;
+  width: 20px;
+}
+#lightblue{
+  background-color: lightblue;
+  width: 20px;
+}
+#cyan{
+  background-color: cyan;
+  width: 20px;
+}
+#blue{
+  background-color: blue;
+  width: 20px;
+}
+#darkblue{
+  background-color: darkblue;
+  width: 20px;
+}
+#purple{
+  background-color: purple;
+  width: 20px;
+}
+#pink{
+  background-color: pink;
+  width: 20px;
+}
+#brown{
+  background-color: brown;
+  width: 20px;
+}
+#Xsmall{
+  background-color: black;
+  border-radius: 50%;
+  height: 9px;
+  width: 9px;
+}
+#small{
+  background-color: black;
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+}
+#medium{
+  background-color: black;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+}
+#large{
+  background-color: black;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+}
+#Xlarge{
+  background-color: black;
+  border-radius: 50%;
+  height: 21px;
+  width: 21px;
+}
+
+#next, #clear{
+  margin-left: 10px;
+}
+
+#next:hover, #clear:hover{
+  color: white;
+  background-color: black;
+}
