@@ -271,14 +271,11 @@ const updateMessage = (allMessage)=>{
   });
 }
 
-const hidden =(word)=>{
-  let hiddenWord =""
-  for (let i=0;i<word.length;i++){
-    if (word.split[""][i] !== "-") {
-      hiddenWord += "_";
-    } else {
-      hiddenWord += "-";
-    }
-  }
-  return hiddenWord
-}
+
+socket.on('words',(wordToFind)=>{
+  let wordListElement = document.getElementById('word')
+  wordListElement.innerHTML = ''
+  let wordItem = document.createElement('li')
+  wordItem.textContent=wordToFind
+  wordListElement.appendChild(wordItem)
+})
